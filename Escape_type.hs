@@ -6,7 +6,7 @@ data Room = Room {
                  room_id      :: Int,
                  room_name    :: String,
                  room_objects :: [Objects],
-                --  room_status  :: Bool,
+                 room_status  :: Bool,
                  room_door    :: [Door]
                 --  room_key     :: Item
                  } 
