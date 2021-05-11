@@ -10,7 +10,7 @@ data Room = Room {
                  room_door    :: [Door]
                 --  room_key     :: Item
                  } 
-                 deriving (Eq,Show)
+                 deriving (Eq, Show, Read)
 
 data Door = Door {
                  door_id :: Int,
@@ -19,7 +19,7 @@ data Door = Door {
                  door_status :: Bool,
                  door_key :: Item
                  }
-                 deriving (Eq,Show)
+                 deriving (Eq, Show, Read)
 
 data Objects = Objects {
                        object_id     :: Int,
@@ -28,17 +28,17 @@ data Objects = Objects {
                        object_status :: Bool,
                        object_key    :: Item
                        }
-                       deriving (Eq,Show)
+                       deriving (Eq, Show, Read)
 
 data Item = Item {
                  item_id   :: Int,
                  item_name :: String,
                  item_info :: String
                  }
-                 deriving (Eq,Show)
+                 deriving (Eq, Show, Read)
 
 data Player = Player {
                      player_location :: Int,
                      player_bag :: [Item]
                      }
-                     deriving (Eq,Show)
+                     deriving (Eq, Show, Read)

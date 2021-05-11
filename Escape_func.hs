@@ -2,6 +2,7 @@ module Escape_func where
 
 -- | import the file
 import Escape_type
+import Data.List
 
 -- -- | test 
 -- nothing = Item {item_id=0, item_name="", item_info=""}
@@ -19,9 +20,13 @@ import Escape_type
 
 -- | function class
 class Funcfunctor t where
+    -- get the id
     get_id            :: t -> Int
+    -- get the name
     get_name          :: t -> String
+    -- get the status
     get_status        :: t -> Bool
+    -- get the key
     get_key           :: t -> Item
     
 
@@ -50,17 +55,50 @@ instance Funcfunctor Item where
     get_name          (Item {item_id=id, item_name=name, item_info=info}) = name
 
 
-
+-- This function can know the room have how many doors and show the door information.
 get_door :: Room -> [Door]
 get_door (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = door
 
+-- This function can get the objects in a room.
 get_objects :: Room -> [Objects]
 get_objects (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = obj
 
+-- This function can get the items in a object.
 get_items :: Objects -> [Item]
 get_items (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = items
 
+-- This function can show the item information.
 get_info :: Item -> String
 get_info (Item {item_id=id, item_name=name, item_info=info}) = info
 
+-- This function show the player room.
+get_player_room :: Player -> House -> Room
+get_player_room _ [] = Room {room_id=999, room_name="No search room", room_objects=[], room_door=[]}
+get_player_room (Player {player_location=id, player_bag=bag}) (b:bs) = if (get_id b) == id then b else get_player_room (Player {player_location=id, player_bag=bag}) bs
 
+-- This function
+get_bag_item :: Player -> [Item]
+get_bag_item (Player {player_location=id, player_bag=bag}) = bag
+
+
+-- This function show the item in the player bag.
+show_bag_item :: [Item] -> Int -> String
+show_bag_item []     n = "Nothing"
+show_bag_item (a:[]) n = "\n======================" ++ "\nItem Number : " ++ show n ++ "\nItem Name   : " 
+                        ++ (get_name a) ++ "\nInformation : " ++ (get_info a) ++ "\n"
+show_bag_item (a:as) n = "\n======================" ++ "\nItem Number : " ++ show n ++ "\nitem Name   : " 
+                        ++ (get_name a) ++ "\nInformation : " ++ (get_info a) ++ "\n" ++ show_bag_item as (n+1)
+
+-- class ToStrfunctor t where
+--     list_to_string :: [t] -> String -> String
+    
+-- instance ToStrfunctor Objects where
+--     list_to_string [] b = "Nothing"
+--     list_to_string (a:as) b = show "123" ++ b ++ list_to_string as b
+
+-- instance ToStrfunctor Item where
+--     list_to_string [] b = "Nothing"
+--     list_to_string (a:as) b = show "123" ++ b ++ list_to_string as b
+-- list_to_string :: [Item] -> String -> String
+-- list_to_string [] b = "Nothing"
+-- list_to_string ((Item {item_id=id, item_name=name, item_info=info}):as) b = name ++ b ++ list_to_string as b
