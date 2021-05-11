@@ -11,7 +11,8 @@ cabal install split
      3. In Milestone #1: a list of 2–4 design questions that you have about your project, that you would like to discuss during the workshop.
      4. the class. (You may also still want to include questions as part of this discussion, if there are aspects you’re unsure about.) -->
 
-1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.
+1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.  
+
    We have build the basic project structure. Based on this structure, we have build the three function 
    'search room': can show the all interactive objects. 
    'check bag': can show the exist item in bag.
