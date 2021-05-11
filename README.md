@@ -21,3 +21,5 @@ cabal install split
    question2 : how use haskell to read a file. We want to use this to implement save/load funciton. 
    
  
+test
+test
