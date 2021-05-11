@@ -16,7 +16,7 @@ cabal install split
    'search room': can show the all interactive objects.  
    'check bag': can show the exist item in bag.  
    'search object'k: can search items in a object.  
-2. Load the Escape_func.hs, Escape_type.hs and main.hs. You can input 'help' in program to get the introduction of operation.  
+2. Load the Escape_func.hs, Escape_type.hs and main.hs. Enter start to open this game. After you start game, you can input 'help' in program to get the introduction of operation.  
 3. question1 : how can we use monid in our structure.   
    question2 : how use haskell to read a file. We want to use this to implement save/load funciton.   
    
