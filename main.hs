@@ -45,7 +45,7 @@ help = \x a b -> do
                     putStrLn "start                                         | you can use this instruction to start the game." 
     else putStr ""
     putStrLn "exit                                          | you can use this instruction to exit the game."
-    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it."
+    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it. (processing)"
     putStrLn "open 'door's id'                              | you can use this instruction to open the door. (not finish)"
     putStrLn "search room                                   | you can use this instruction to search all object in your current room."
     putStrLn "check bag                                     | you can use this instruction to check the bag items."
