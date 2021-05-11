@@ -81,13 +81,17 @@ get_bag_item    (Player {player_location=id, player_bag=bag}) = bag
 -----------------------------------------------------------------------------------------------------------------------------------------
 --
 --
-split :: Eq a => [a] -> [a] -> [[a]]
-split = splitOn
 -- 
 -- This function show the player room.
 get_player_room :: Player -> House -> Room
 get_player_room _                                             []     = Room {room_id=999, room_name="No search room", room_objects=[], room_door=[]}
 get_player_room (Player {player_location=id, player_bag=bag}) (b:bs) = if (get_id b) == id then b else get_player_room (Player {player_location=id, player_bag=bag}) bs
+
+get_obj_by_name :: [Objects] -> String -> Objects
+get_obj_by_name (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}:as) b = if name == b then Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key} else get_obj_by_name as b
+
+add_item_in_bag :: Player -> [Item] -> Player
+add_item_in_bag (Player {player_location=id, player_bag=bag}) i = Player {player_location=id, player_bag=bag ++ i}
 
 -- 
 --
@@ -96,8 +100,7 @@ get_player_room (Player {player_location=id, player_bag=bag}) (b:bs) = if (get_i
 item_style a n = "\n======================" ++ 
                  "\nItem Number : " ++ show n ++
                  "\nItem Name   : " ++ (get_name a) ++
-                 "\nInformation : " ++ (get_info a) ++
-                 "\n"
+                 "\nInformation : " ++ (get_info a)
 
 --   This function show the item in the player bag.
 show_bag_item :: [Item] -> Int -> String
