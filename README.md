@@ -20,6 +20,3 @@ cabal install split
 3. question1 : how can we use monid in our structure. 
    question2 : how use haskell to read a file. We want to use this to implement save/load funciton. 
    
- 
-test
-test
