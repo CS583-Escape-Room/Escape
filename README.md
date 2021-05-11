@@ -11,14 +11,12 @@ cabal install split
      3. In Milestone #1: a list of 2–4 design questions that you have about your project, that you would like to discuss during the workshop.
      4. the class. (You may also still want to include questions as part of this discussion, if there are aspects you’re unsure about.) -->
 
-1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.
-   We have build the basic project structure. Based on this structure, we have build the three function 
-   'search room': can show the all interactive objects. 
-   'check bag': can show the exist item in bag.
-   'search object'k: can search items in a object.
-2. Load the Escape_func.hs, Escape_type.hs and main.hs. You can input 'help' in program to get the introduction of operation.
-3. question1 : how can we use monid in our structure. 
-   question2 : how use haskell to read a file. We want to use this to implement save/load funciton. 
+1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.  
+   We have build the basic project structure. Based on this structure, we have build the three function:   
+   'search room': can show the all interactive objects.  
+   'check bag': can show the exist item in bag.  
+   'search object'k: can search items in a object.  
+2. Load the Escape_func.hs, Escape_type.hs and main.hs. You can input 'help' in program to get the introduction of operation.  
+3. question1 : how can we use monid in our structure.   
+   question2 : how use haskell to read a file. We want to use this to implement save/load funciton.   
    
-test  
-test
