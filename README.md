@@ -2,7 +2,9 @@
 
 <!-- Instell the packages -->
 <!-- It will take many times -->
+### Before you run the code you need to install those package.
 cabal install fgl
+cabal install split
 
 <!-- 1. A brief description of your project goals (you can take this from your project proposal), and your current progress toward achieving those goals.
      2. Instructions for how to run your project (e.g. which file to load in GHCi), including several example inputs, if applicable.
