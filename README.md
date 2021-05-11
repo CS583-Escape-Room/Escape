@@ -19,3 +19,5 @@ cabal install split
 2. Load the Escape_func.hs, Escape_type.hs and main.hs. You can input 'help' in program to get the  
 3. question1 : how can we use monid in our structure. 
    question2 : how use haskell to read a file. We want to use this to implement save/load funciton. 
+   
+ 
