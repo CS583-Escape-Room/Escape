@@ -2,6 +2,7 @@ module Escape_type where
 
 type House = [Room]
 
+-- This type is for room.
 data Room = Room {
                  room_id      :: Int,
                  room_name    :: String,

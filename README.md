@@ -13,7 +13,7 @@ cabal install split
 1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.  
    We have build the basic project structure. Based on this structure, we have build the three function:   
    'search room': can show the all interactive objects.  
-   'check bag': can show the exist item in bag.  
+   'check bag': can show the exist item in bag.  git a
    'search object'k: can search items in a object.  
 2. AFter you install fgl and split, use GHCi the Escape_func.hs, Escape_type.hs and main.hs. Enter start to open this game. After you start game, you can input 'help' in program to get the introduction of operation.  
 3. question1 : how can we use monid in our structure.   
