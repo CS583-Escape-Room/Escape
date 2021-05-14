@@ -22,6 +22,8 @@ data Door = Door {
                  }
                  deriving (Eq, Show, Read)
 
+data content
+
 data Objects = Objects {
                        object_id     :: Int,
                        object_name   :: String,

@@ -45,7 +45,7 @@ help = \x a b -> do
                     putStrLn "start                                         | you can use this instruction to start the game." 
     else putStr ""
     putStrLn "exit                                          | you can use this instruction to exit the game."
-    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it. (processing)"
+    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it."
     putStrLn "open 'door's id'                              | you can use this instruction to open the door. (not finish)"
     putStrLn "search room                                   | you can use this instruction to search all object in your current room."
     putStrLn "check bag                                     | you can use this instruction to check the bag items."
@@ -77,25 +77,23 @@ run_code player house = do
                                                         let objs = get_objects rm
                                                         if foldr (||) False (map (==on) (map get_name objs)) then do
                                                             let obj = get_obj_by_name objs on
+                                                            let items = get_items obj
                                                             if get_status obj == False then do
                                                                 if foldr (||) False (map (==(get_key obj)) (get_bag_item player)) then do
-                                                                    let items = get_items obj
                                                                     let p = add_item_in_bag player items
                                                                     let h = remove_item_in_obj (get_player_id player) house obj
-                                                                    -- let h = remove_item_in_object obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                                                     run_code p h
                                                                 else do
                                                                     putStrLn (on ++ " is lock, you need a key.")
                                                                     run_code player house
                                                             else do
-                                                                let items = get_items obj
-                                                                let h = remove_item_in_obj (get_player_id player) house obj
                                                                 if (length items) == 0 then do
                                                                     putStrLn (on ++ " is empty.")
                                                                     run_code player house
                                                                 else do
                                                                     let p = add_item_in_bag player items
+                                                                    let h = remove_item_in_obj (get_player_id player) house obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                                                     run_code p h
                                                         else do
