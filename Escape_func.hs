@@ -87,11 +87,23 @@ get_player_room :: Player -> House -> Room
 get_player_room _                                             []     = Room {room_id=999, room_name="No search room", room_objects=[], room_door=[]}
 get_player_room (Player {player_location=id, player_bag=bag}) (b:bs) = if (get_id b) == id then b else get_player_room (Player {player_location=id, player_bag=bag}) bs
 
+get_player_id :: Player -> Int
+get_player_id Player {player_location=id, player_bag=bag} = id
+
 get_obj_by_name :: [Objects] -> String -> Objects
 get_obj_by_name (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}:as) b = if name == b then Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key} else get_obj_by_name as b
 
 add_item_in_bag :: Player -> [Item] -> Player
 add_item_in_bag (Player {player_location=id, player_bag=bag}) i = Player {player_location=id, player_bag=bag ++ i}
+
+remove_obj :: [Objects] -> Objects -> [Objects]
+remove_obj (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}:os) obj = if Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key} == obj then 
+                                                                                                                            [Objects {object_id=id, object_name=name, object_items=[], object_status=True, object_key=key}] ++ os
+                                                                                                                        else [Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}] ++ remove_obj os obj
+
+remove_item_in_obj :: Int -> House -> Objects -> House
+remove_item_in_obj id (h:hs) o = if get_id h == id then [Room {room_id=get_id h, room_name=get_name h, room_objects=remove_obj (get_objects h) o, room_door=get_door h}] ++ hs
+                                 else [h] ++ remove_item_in_obj id hs o
 
 -- 
 --

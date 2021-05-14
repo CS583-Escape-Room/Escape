@@ -81,18 +81,23 @@ run_code player house = do
                                                                 if foldr (||) False (map (==(get_key obj)) (get_bag_item player)) then do
                                                                     let items = get_items obj
                                                                     let p = add_item_in_bag player items
+                                                                    let h = remove_item_in_obj (get_player_id player) house obj
                                                                     -- let h = remove_item_in_object obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
-                                                                    run_code p house
+                                                                    run_code p h
                                                                 else do
                                                                     putStrLn (on ++ " is lock, you need a key.")
                                                                     run_code player house
                                                             else do
                                                                 let items = get_items obj
-                                                                let p = add_item_in_bag player items
-                                                                -- let h = remove_item_in_object obj
-                                                                putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
-                                                                run_code p house
+                                                                let h = remove_item_in_obj (get_player_id player) house obj
+                                                                if (length items) == 0 then do
+                                                                    putStrLn (on ++ " is empty.")
+                                                                    run_code player house
+                                                                else do
+                                                                    let p = add_item_in_bag player items
+                                                                    putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
+                                                                    run_code p h
                                                         else do
                                                             putStrLn ("This room does not have '" ++ on ++ "' object.")
                                                             run_code player house
