@@ -62,6 +62,7 @@ run_code player house = do
         line <- getLine
         -- putStrLn ""
         let line_list = (splitOn " " line)
+        let cmd_length = length line_list
         let rm = get_player_room player house
         if      line == "help"                      then help "run_code" player house
         else if line == "exit"                      then main
@@ -72,7 +73,7 @@ run_code player house = do
                                                         let i = (get_bag_item player)
                                                         putStrLn ("Your bag have " ++ (show (length i)) ++ " items" ++ (show_bag_item i 1))
                                                         run_code player house
-        else if head line_list == "search"          then do
+        else if cmd_length > 1 && head line_list == "search" then do
                                                         let on = head (tail line_list)
                                                         let objs = get_objects rm
                                                         if foldr (||) False (map (==on) (map get_name objs)) then do

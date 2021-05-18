@@ -22,7 +22,7 @@ import Data.List.Split
 -------------------------------------------------------------------------------------------------------------------
 -- | All function in this section implement the basic get.
 -- function class
-class Funcfunctor t where
+class Getfunctor t where
     -- get the id
     get_id            :: t -> Int
     -- get the name
@@ -32,49 +32,53 @@ class Funcfunctor t where
     -- get the key
     get_key           :: t -> Item
 
--- | instance the Room
-instance Funcfunctor Room where
-    get_id            (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = id
-    get_name          (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = name
+-- | instance the Room's id, name, object, and door
+instance Getfunctor Room where
+    get_id            (Room {room_id=id}) = id
+    get_name          (Room {room_name=name}) = name
+    get_status        _ = False
+    get_key           _ = Item {item_id=0, item_name="", item_info=""}
 
--- | instance the Objects
-instance Funcfunctor Objects where
-    get_id            (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = id
-    get_name          (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = name
-    get_status        (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = stat
-    get_key           (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = key
+-- | instance the Objects's id, name, item, status, and key
+instance Getfunctor Objects where
+    get_id            (Objects {object_id=id}) = id
+    get_name          (Objects {object_name=name}) = name
+    get_status        (Objects {object_status=stat}) = stat
+    get_key           (Objects {object_key=key}) = key
 
--- | instance the Door
-instance Funcfunctor Door where
-    get_id            (Door {door_id=id, door_name=name, door_connect=room, door_status=stat, door_key=key}) = id
-    get_name          (Door {door_id=id, door_name=name, door_connect=room, door_status=stat, door_key=key}) = name
-    get_status        (Door {door_id=id, door_name=name, door_connect=room, door_status=stat, door_key=key}) = stat
-    get_key           (Door {door_id=id, door_name=name, door_connect=room, door_status=stat, door_key=key}) = key
+-- | instance the Door's id, name, connect, status, and key
+instance Getfunctor Door where
+    get_id            (Door {door_id=id}) = id
+    get_name          (Door {door_name=name}) = name
+    get_status        (Door {door_status=stat}) = stat
+    get_key           (Door {door_key=key}) = key
 
--- | instance the Item
-instance Funcfunctor Item where
-    get_id            (Item {item_id=id, item_name=name, item_info=info}) = id
-    get_name          (Item {item_id=id, item_name=name, item_info=info}) = name
+-- | instance the Item's id, name, and info
+instance Getfunctor Item where
+    get_id            (Item {item_id=id}) = id
+    get_name          (Item {item_name=name}) = name
+    get_status        _ = False
+    get_key           _ = Item {item_id=0, item_name="", item_info=""}
 
 -- This function can know the room have how many doors and show the door information.
 get_door :: Room -> [Door]
-get_door        (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = door
+get_door        (Room {room_door=door}) = door
 
 -- This function can get the objects in a room.
 get_objects :: Room -> [Objects]
-get_objects     (Room {room_id=id, room_name=name, room_objects=obj, room_door=door}) = obj
+get_objects     (Room {room_objects=obj}) = obj
 
 -- This function can get the items in a object.
 get_items :: Objects -> [Item]
-get_items       (Objects {object_id=id, object_name=name, object_items=items, object_status=stat, object_key=key}) = items
+get_items       (Objects {object_items=items}) = items
 
 -- This function can show the item information.
 get_info :: Item -> String
-get_info        (Item {item_id=id, item_name=name, item_info=info}) = info
+get_info        (Item {item_info=info}) = info
 
 -- This function get all item in the player bag.
 get_bag_item :: Player -> [Item]
-get_bag_item    (Player {player_location=id, player_bag=bag}) = bag
+get_bag_item    (Player {player_bag=bag}) = bag
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- | In this section all implement the function that the player needs.
