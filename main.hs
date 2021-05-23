@@ -2,26 +2,13 @@ module Escape_main where
 
 import Escape_func
 import Escape_type
+import Escape_house
 import Data.List
 import Data.List.Split
-
--- | test 
-nothing = Item {item_id=0, item_name="", item_info=""}
-nokey = Item {item_id=0, item_name="", item_info="This is open."}
-rkey1 = Item {item_id=1, item_name="room key", item_info="A key which can open the door."}
-dkey1 = Item {item_id=2, item_name="desk key", item_info="A key which can open the desk."}
-object1 = Objects {object_id=1, object_name="desk", object_items=[rkey1], object_status=False, object_key=dkey1}
-object2 = Objects {object_id=2, object_name="chair", object_items=[dkey1], object_status=True, object_key=nokey}
-object3 = Objects {object_id=3, object_name="book", object_items=[], object_status=True, object_key=nokey}
-object4 = Objects {object_id=4, object_name="box", object_items=[], object_status=True, object_key=nokey}
-door1 = Door {door_id=1, door_name="exit", door_connect=0, door_status=False, door_key=rkey1}
-room1 = Room {room_id=1, room_name="room 1", room_objects=[object1, object2, object3, object4], room_door=[door1]}
-ball = Item {item_id=3, item_name="ball", item_info="This ball can do nothing."}
-redkey1 = Item {item_id=4, item_name="red key", item_info="This key can do something."}
-player1 = Player {player_location=1, player_bag=[ball, redkey1]}
-house1 = [room1]
+import Control.Monad.State
 
 
+main :: IO()
 main = do
     putStrLn ""
     putStrLn "Well come to play the Escape game. !!!"
@@ -37,6 +24,21 @@ main = do
         putStrLn ("wrong input: '" ++ line ++ "' Please try again.")
         main
 
+-- data Command
+--     = Help
+--     | Exit
+--     deriving(Eq, Show)
+
+-- cmd :: Command -> Player -> House -> IO ()
+-- cmd Help p h = help "run_code" p h
+-- cmd Exit p h = return()
+
+-- commands :: Player -> House -> StateT Command IO()
+-- commands p h = do 
+--     line <- getLine
+--     cmd line p h
+
+help :: String -> Player -> House -> IO()
 help = \x a b -> do
     putStrLn ""
     putStrLn "instructions                                  | Describing instructions"
@@ -54,6 +56,8 @@ help = \x a b -> do
     putStrLn ""
     if x == "main" then main else run_code a b
 
+
+run_code :: Player -> House -> IO()
 run_code player house = do
         putStrLn ""
         putStrLn ("Now you are in the " ++ (get_name (get_player_room player house)) ++ ".")
@@ -76,11 +80,11 @@ run_code player house = do
         else if cmd_length > 1 && head line_list == "search" then do
                                                         let on = head (tail line_list)
                                                         let objs = get_objects rm
-                                                        if foldr (||) False (map (==on) (map get_name objs)) then do
+                                                        if (any (==on) (map get_name objs)) then do
                                                             let obj = get_obj_by_name objs on
                                                             let items = get_items obj
                                                             if get_status obj == False then do
-                                                                if foldr (||) False (map (==(get_key obj)) (get_bag_item player)) then do
+                                                                if (any (==(get_key obj)) (get_bag_item player)) then do
                                                                     let p = add_item_in_bag player items
                                                                     let h = remove_item_in_obj (get_player_id player) house obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
