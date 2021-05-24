@@ -86,7 +86,7 @@ run_code player house = do
                                                             if get_status obj == False then do
                                                                 if (any (==(get_key obj)) (get_bag_item player)) then do
                                                                     let p = add_item_in_bag player items
-                                                                    let h = remove_item_in_obj (get_player_id player) house obj
+                                                                    let h = remove_item_in_obj (get_location player) house obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                                                     run_code p h
                                                                 else do
@@ -98,7 +98,7 @@ run_code player house = do
                                                                     run_code player house
                                                                 else do
                                                                     let p = add_item_in_bag player items
-                                                                    let h = remove_item_in_obj (get_player_id player) house obj
+                                                                    let h = remove_item_in_obj (get_location player) house obj
                                                                     putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                                                     run_code p h
                                                         else do

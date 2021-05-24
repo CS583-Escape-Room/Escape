@@ -14,21 +14,23 @@ data Room = Room {
                  deriving (Eq, Show, Read)
 
 data Door = Door {
-                 door_id :: Int,
-                 door_name :: String,
-                 door_connect :: Int,
-                 door_status :: Bool,
-                 door_key :: Item
+                 door_id        :: Int,
+                 door_name      :: String,
+                 door_connect   :: Int,
+                 door_status    :: Bool,
+                 door_key       :: Item
                  }
                  deriving (Eq, Show, Read)
 
 
 data Objects = Objects {
-                       object_id     :: Int,
-                       object_name   :: String,
-                       object_items   :: [Item],
-                       object_status :: Bool,
-                       object_key    :: Item
+                       object_id        :: Int,
+                       object_name      :: String,
+                       object_items     :: [Item],
+                       object_connect   :: Int,
+                       object_type      :: String,
+                       object_status    :: Bool,
+                       object_key       :: Item
                        }
                        deriving (Eq, Show, Read)
 
@@ -40,7 +42,7 @@ data Item = Item {
                  deriving (Eq, Show, Read)
 
 data Player = Player {
-                     player_location :: Int,
-                     player_bag :: [Item]
+                     player_location    :: Int,
+                     player_bag         :: [Item]
                      }
                      deriving (Eq, Show, Read)
