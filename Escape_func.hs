@@ -37,8 +37,8 @@ instance Getfunctor Item where
     get_name          (Item {item_name=name}) = name
 
 -- This function can know the room have how many doors and show the door information.
-get_door :: Room -> [Door]
-get_door        (Room {room_door=door}) = door
+-- get_door :: Room -> [Door]
+-- get_door        (Room {room_door=door}) = door
 
 -- get the status
 get_status :: Objects -> Bool
@@ -51,7 +51,7 @@ get_key (Objects {object_key=key}) = key
 get_type :: Objects -> String
 get_type (Objects {object_type=t}) = t
 
-get_connect :: Objects -> Int
+get_connect :: Objects -> String
 get_connect (Objects {object_connect=connect}) = connect
 
 -- This function can get the objects in a room.
@@ -81,7 +81,7 @@ get_bag_item    (Player {player_bag=bag}) = bag
 -- 
 -- This function show the player room.
 get_player_room :: Player -> House -> Room
-get_player_room _                                             []     = Room {room_id=999, room_name="No search room", room_objects=[], room_door=[]}
+get_player_room _                                             []     = Room {room_id=999, room_name="No search room", room_objects=[]}
 get_player_room p (b:bs) = if (get_id b) == (get_location p) then b else get_player_room p bs
 
 get_obj_by_name :: [Objects] -> String -> Objects
@@ -91,14 +91,20 @@ add_item_in_bag :: Player -> [Item] -> Player
 add_item_in_bag p i = Player {player_location=get_location p, player_bag=(get_bag_item p) ++ i}
 
 remove_obj :: [Objects] -> Objects -> [Objects]
-remove_obj (Objects {object_id=id, object_name=name, object_items=items, object_connect=connect, object_type=t, object_status=stat, object_key=key}:os) obj = if Objects {object_id=id, object_name=name, object_items=items, object_connect=connect, object_type=t, object_status=stat, object_key=key} == obj then 
-                                                                                                                            [Objects {object_id=id, object_name=name, object_items=[], object_connect=connect, object_type=t, object_status=True, object_key=key}] ++ os
-                                                                                                                        else [Objects {object_id=id, object_name=name, object_items=items, object_connect=connect, object_type=t, object_status=stat, object_key=key}] ++ remove_obj os obj
+remove_obj (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_status=True, object_key=get_key o}:os)
+                        else (o:remove_obj os obj)
 
 remove_item_in_obj :: Int -> House -> Objects -> House
-remove_item_in_obj id (h:hs) o = if get_id h == id then [Room {room_id=get_id h, room_name=get_name h, room_objects=remove_obj (get_objects h) o, room_door=get_door h}] ++ hs
-                                 else [h] ++ remove_item_in_obj id hs o
+remove_item_in_obj id (h:hs) o = if get_id h == id then [Room {room_id=get_id h, room_name=get_name h, room_objects=remove_obj (get_objects h) o}] ++ hs
+                                 else (h:remove_item_in_obj id hs o)
 
+unluck :: [Objects] -> Objects -> [Objects]
+unluck (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_status=True, object_key=get_key o}:os)
+                    else (o:unluck os obj)
+
+unluck_door :: Int -> House -> Objects -> House
+unluck_door id (h:hs) o = if get_id h == id then (Room {room_id=get_id h, room_name=get_name h, room_objects=unluck (get_objects h) o}:hs)
+                          else (h:unluck_door id hs o)
 -- 
 --
 -- | "check bag" instruction.

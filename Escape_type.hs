@@ -6,28 +6,28 @@ type House = [Room]
 data Room = Room {
                  room_id      :: Int,
                  room_name    :: String,
-                 room_objects :: [Objects],
+                 room_objects :: [Objects]
                 --  room_status  :: Bool,
-                 room_door    :: [Door]
+                --  room_door    :: [Door]
                 --  room_key     :: Item
                  } 
                  deriving (Eq, Show, Read)
 
-data Door = Door {
-                 door_id        :: Int,
-                 door_name      :: String,
-                 door_connect   :: Int,
-                 door_status    :: Bool,
-                 door_key       :: Item
-                 }
-                 deriving (Eq, Show, Read)
+-- data Door = Door {
+--                  door_id        :: Int,
+--                  door_name      :: String,
+--                  door_connect   :: Int,
+--                  door_status    :: Bool,
+--                  door_key       :: Item
+--                  }
+--                  deriving (Eq, Show, Read)
 
 
 data Objects = Objects {
                        object_id        :: Int,
                        object_name      :: String,
                        object_items     :: [Item],
-                       object_connect   :: Int,
+                       object_connect   :: String,
                        object_type      :: String,
                        object_status    :: Bool,
                        object_key       :: Item

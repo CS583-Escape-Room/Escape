@@ -33,11 +33,11 @@ help = \x a b -> do
                     putStrLn "start                                         | you can use this instruction to start the game." 
     else putStr ""
     putStrLn "exit                                          | you can use this instruction to exit the game."
-    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it."
+    putStrLn "search 'object's name'                        | you can use this instruction to know what item in the object and get it, or check the door."
     -- putStrLn "open 'door's id'                              | you can use this instruction to open the door. (not finish)"
     putStrLn "search room                                   | you can use this instruction to search all object in your current room."
     putStrLn "check bag                                     | you can use this instruction to check the bag items."
-    putStrLn "move 'room's id'/ move 'room's name'          | you can use this instruction to move the player to the room which you input and the room must can accpect. (not finish)"
+    putStrLn "move 'room's name'                            | you can use this instruction to move the player to the room which you input and the room must can accpect. (not finish)"
     putStrLn "-----------------------------------------------------------------------------------------------------------"
     putStrLn ""
     if x == "main" then main else run_code a b
@@ -55,6 +55,7 @@ cmd (SearchObj objname obj)     p h = do
                                         if (any (==(get_key obj)) (get_bag_item p)) then do
                                             let np = add_item_in_bag p items
                                             let nh = remove_item_in_obj (get_location p) h obj
+                                            putStrLn ("You open the " ++ objname ++ ". ")
                                             putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                             run_code np nh
                                         else do
@@ -69,7 +70,19 @@ cmd (SearchObj objname obj)     p h = do
                                             let nh = remove_item_in_obj (get_location p) h obj
                                             putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                             run_code np nh
-cmd (SearchDoor objname obj)    p h = undefined
+cmd (SearchDoor objname obj)    p h =   if get_status obj == False then do
+                                            if (any (==(get_key obj)) (get_bag_item p)) then do
+                                                let nh = unluck_door (get_location p) h obj
+                                                putStrLn ("Good job, the door is unluck.")
+                                                putStrLn ("You can input 'move " ++ (get_connect obj) ++ "' to move to the " ++ (get_connect obj) ++ " room.")
+                                                run_code p nh
+                                            else do
+                                                putStrLn ("Sorry this door can not open, you need a key.")
+                                                run_code p h
+                                        else do 
+                                            putStrLn ("The door is unluck.")
+                                            putStrLn ("If you want to move to the " ++ (get_connect obj) ++ " room, you can input 'move " ++ (get_connect obj) ++ "'.")
+                                            run_code p h
 cmd (Search rm objname)         p h = do
                                     let objs = get_objects rm
                                     if (any (==objname) (map get_name objs)) then do
