@@ -23,7 +23,7 @@ object3 = Objects {object_id=3, object_name="book", object_items=[], object_conn
 object4 = Objects {object_id=4, object_name="box", object_items=[], object_connect= -1, object_type="obj", object_status=True, object_key=nokey}
 
 -- Door
-door1 = Objects {object_id=5, object_name="exit", object_items=[], object_connect=0, object_type="door", object_status=True, object_key=nokey}
+door1 = Objects {object_id=5, object_name="exit-door", object_items=[], object_connect=0, object_type="door", object_status=True, object_key=nokey}
 -- door1 = Door {door_id=1, door_name="exit", door_connect=0, door_status=False, door_key=rkey1}
 
 -- | Room

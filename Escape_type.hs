@@ -46,3 +46,15 @@ data Player = Player {
                      player_bag         :: [Item]
                      }
                      deriving (Eq, Show, Read)
+
+
+data Cmd
+    = Help String
+    | Exit
+    | SearchRoom Room
+    | SearchObj String Objects
+    | SearchDoor String Objects
+    | Search Room String
+    | Bag
+    | Other String
+    deriving(Eq, Show, Read)
