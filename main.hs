@@ -37,7 +37,7 @@ help = \x a b -> do
     -- putStrLn "open 'door's id'                              | you can use this instruction to open the door. (not finish)"
     putStrLn "search room                                   | you can use this instruction to search all object in your current room."
     putStrLn "check bag                                     | you can use this instruction to check the bag items."
-    putStrLn "move 'room's name'                            | you can use this instruction to move the player to the room which you input and the room must can accpect. (not finish)"
+    putStrLn "move 'room's name'                            | you can use this instruction to move the player to the room which you input and the room must can accpect."
     putStrLn "-----------------------------------------------------------------------------------------------------------"
     putStrLn ""
     if x == "main" then main else run_code a b
