@@ -124,27 +124,33 @@ cmd (Other c)                   p h = do
                                     putStrLn ("wrong input: '" ++ c ++ "' Please try again.")
                                     run_code p h
 
+check_win :: String -> Bool
+check_win roomname = if roomname == "exit" then True else False
+
 run_code :: Player -> House -> IO()
 run_code player house = do
-        putStrLn ""
-        putStrLn ("Now you are in the " ++ (get_name (get_player_room player house)) ++ ".")
-        putStrLn "What do you want to do?"
-        putStr "> "
-        line <- getLine
-        let line_list = (splitOn " " line)
-        let name = (intercalate " " (tail line_list))
-        let cmd_length = length line_list
-        let rm = get_player_room player house
-        if      line == "help"                                  then cmd (Help "run_code") player house
-        else if line == "exit"                                  then cmd Exit player house
-        else if line == "search room"                           then cmd (SearchRoom rm) player house
-        else if line == "check bag"                             then cmd Bag player house
-        else if cmd_length > 1 && head line_list == "search"    then cmd (Search rm name) player house
-        else if cmd_length > 1 && head line_list == "move"      then cmd (Mov rm name) player house
-        else cmd (Other line) player house
+        if check_win (get_name (get_player_room player house)) then exit
+        else do
+            putStrLn ""
+            putStrLn ("Now you are in the " ++ (get_name (get_player_room player house)) ++ ".")
+            putStrLn "What do you want to do?"
+            putStr "> "
+            line <- getLine
+            let line_list = (splitOn " " line)
+            let name = (intercalate " " (tail line_list))
+            let cmd_length = length line_list
+            let rm = get_player_room player house
+            if      line == "help"                                  then cmd (Help "run_code") player house
+            else if line == "exit"                                  then cmd Exit player house
+            else if line == "search room"                           then cmd (SearchRoom rm) player house
+            else if line == "check bag"                             then cmd Bag player house
+            else if cmd_length > 1 && head line_list == "search"    then cmd (Search rm name) player house
+            else if cmd_length > 1 && head line_list == "move"      then cmd (Mov rm name) player house
+            else cmd (Other line) player house
 
 exit :: IO()
 exit = do
+        putStrLn ""
         putStrLn "Congratulation!!! You escape this dangerous room."
         putStrLn "If you want to leave the game, please input the exit."
         putStr "> "
