@@ -47,7 +47,9 @@ cmd :: Cmd -> Player -> House -> IO()
 cmd (Help s)                    p h = help s p h
 cmd Exit                        p h = main
 cmd (SearchRoom rm)             p h = do 
-                                    putStrLn ("The objects in room: " ++ (intercalate ", " (map get_name (get_objects rm))))
+                                    if length (get_objects rm) > 0 then 
+                                        putStrLn ("The objects in room: " ++ (intercalate ", " (map get_name (get_objects rm))))
+                                    else putStrLn ("No objects in this room. ")
                                     run_code p h
 cmd (SearchObj objname obj)     p h = do
                                     let items = get_items obj
@@ -95,6 +97,22 @@ cmd Bag                         p h = do
                                     let i = (get_bag_item p)
                                     putStrLn ("Your bag have " ++ (show (length i)) ++ " items" ++ (show_bag_item i 1))
                                     run_code p h
+cmd (Mov rm roomname)           p h = do
+                                    let objs = get_objects rm
+                                    let doors = get_objects_by_type "door" objs
+                                    if (any (==roomname) (map get_connect doors)) then do
+                                        let door = get_obj_by_connect roomname doors
+                                        if get_status door then do
+                                            let nrm = get_room_by_name roomname h
+                                            let np = Player {player_location=get_id nrm, player_bag=get_bag_item p}
+                                            run_code np h
+                                        else do
+                                            putStrLn ("Sorry, you can not move to " ++ roomname ++ " room.")
+                                            putStrLn ("You need to find the key to open the '" ++ get_name door ++ "' door.")
+                                            run_code p h
+                                    else do
+                                        putStrLn ("No door can let you move to " ++ roomname ++ ".")
+                                        run_code p h
 cmd (Other c)                   p h = do
                                     putStrLn ("wrong input: '" ++ c ++ "' Please try again.")
                                     run_code p h
@@ -107,11 +125,22 @@ run_code player house = do
         putStr "> "
         line <- getLine
         let line_list = (splitOn " " line)
+        let name = (intercalate " " (tail line_list))
         let cmd_length = length line_list
         let rm = get_player_room player house
         if      line == "help"                                  then cmd (Help "run_code") player house
         else if line == "exit"                                  then cmd Exit player house
         else if line == "search room"                           then cmd (SearchRoom rm) player house
         else if line == "check bag"                             then cmd Bag player house
-        else if cmd_length > 1 && head line_list == "search"    then cmd (Search rm (head (tail line_list))) player house
+        else if cmd_length > 1 && head line_list == "search"    then cmd (Search rm name) player house
+        else if cmd_length > 1 && head line_list == "move"      then cmd (Mov rm name) player house
         else cmd (Other line) player house
+
+exit :: IO()
+exit = do
+        putStrLn "Congratulation!!! You escape this dangerous room."
+        putStrLn "If you want to leave the game, please input the exit."
+        putStr "> "
+        line <- getLine
+        if line == "exit" then main
+        else exit

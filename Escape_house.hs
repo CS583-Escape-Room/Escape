@@ -23,15 +23,15 @@ object3 = Objects {object_id=3, object_name="book", object_items=[], object_conn
 object4 = Objects {object_id=4, object_name="box", object_items=[], object_connect="", object_type="obj", object_status=True, object_key=nokey}
 
 -- Door
-door1 = Objects {object_id=5, object_name="exit-door", object_items=[], object_connect="exit", object_type="door", object_status=False, object_key=rkey1}
+door1 = Objects {object_id=5, object_name="exit door", object_items=[], object_connect="exit", object_type="door", object_status=False, object_key=rkey1}
 -- door1 = Door {door_id=1, door_name="exit", door_connect=0, door_status=False, door_key=rkey1}
 
 -- | Room
 room1 = Room {room_id=1, room_name="room 1", room_objects=[object1, object2, object3, object4, door1]}
-exit = Room {room_id=0, room_name="exit", room_objects=[]}
+exit_room = Room {room_id=0, room_name="exit", room_objects=[]}
 
 -- | House
-house1 = [room1]
+house1 = [room1, exit_room]
 
 -- | Player
 player1 = Player {player_location=1, player_bag=[ball, redkey1]}

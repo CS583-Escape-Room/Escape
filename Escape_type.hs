@@ -56,5 +56,6 @@ data Cmd
     | SearchDoor String Objects
     | Search Room String
     | Bag
+    | Mov Room String
     | Other String
     deriving(Eq, Show, Read)

@@ -81,7 +81,7 @@ get_bag_item    (Player {player_bag=bag}) = bag
 -- 
 -- This function show the player room.
 get_player_room :: Player -> House -> Room
-get_player_room _                                             []     = Room {room_id=999, room_name="No search room", room_objects=[]}
+get_player_room _ []     = Room {room_id=999, room_name="No search room", room_objects=[]}
 get_player_room p (b:bs) = if (get_id b) == (get_location p) then b else get_player_room p bs
 
 get_obj_by_name :: [Objects] -> String -> Objects
@@ -105,6 +105,20 @@ unluck (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=g
 unluck_door :: Int -> House -> Objects -> House
 unluck_door id (h:hs) o = if get_id h == id then (Room {room_id=get_id h, room_name=get_name h, room_objects=unluck (get_objects h) o}:hs)
                           else (h:unluck_door id hs o)
+
+get_objects_by_type :: String -> [Objects] -> [Objects]
+get_objects_by_type t []     = []
+get_objects_by_type t (o:os) = if get_type o == t then (o:get_objects_by_type t os)
+                               else get_objects_by_type t os
+
+get_obj_by_connect :: String -> [Objects] -> Objects
+get_obj_by_connect c []     = Objects {object_id=0, object_name="Nothing", object_items=[], object_connect="", object_type="", object_status=False, object_key=Item {item_id=0, item_name="", item_info=""}}
+get_obj_by_connect c (o:os) = if get_connect o == c then o
+                              else get_obj_by_connect c os
+
+get_room_by_name :: String -> House -> Room
+get_room_by_name roomname []     = Room {room_id=999, room_name="No search room", room_objects=[]}
+get_room_by_name roomname (h:hs) = if get_name h == roomname then h else get_room_by_name roomname hs
 -- 
 --
 -- | "check bag" instruction.
