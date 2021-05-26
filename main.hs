@@ -57,32 +57,39 @@ cmd (SearchObj objname obj)     p h = do
                                         if (any (==(get_key obj)) (get_bag_item p)) then do
                                             let np = add_item_in_bag p items
                                             let nh = remove_item_in_obj (get_location p) h obj
-                                            putStrLn ("You open the " ++ objname ++ ". ")
+                                            putStrLn ("You success open the " ++ objname ++ ". ")
+                                            putStrLn (get_unlock_info obj)
                                             putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                             run_code np nh
                                         else do
                                             putStrLn (objname ++ " is lock, you need a key.")
+                                            putStrLn (get_lock_info obj)
                                             run_code p h
                                     else do
                                         if (length items) == 0 then do
-                                            putStrLn (objname ++ " is empty.")
-                                            run_code p h
+                                            let nh = remove_item_in_obj (get_location p) h obj
+                                            putStrLn (get_unlock_info obj)
+                                            run_code p nh
                                         else do
                                             let np = add_item_in_bag p items
                                             let nh = remove_item_in_obj (get_location p) h obj
+                                            putStrLn (get_unlock_info obj)
                                             putStrLn ("You got items : " ++ (intercalate ", " (map get_name (items))))
                                             run_code np nh
 cmd (SearchDoor objname obj)    p h =   if get_status obj == False then do
                                             if (any (==(get_key obj)) (get_bag_item p)) then do
-                                                let nh = unluck_door (get_location p) h obj
-                                                putStrLn ("Good job, the door is unluck.")
+                                                let nh = unlock_door (get_location p) h obj
+                                                putStrLn ("Good job, the door is unlock.")
+                                                putStrLn (get_unlock_info obj)
                                                 putStrLn ("You can input 'move " ++ (get_connect obj) ++ "' to move to the " ++ (get_connect obj) ++ " room.")
                                                 run_code p nh
                                             else do
                                                 putStrLn ("Sorry this door can not open, you need a key.")
+                                                putStrLn (get_lock_info obj)
                                                 run_code p h
                                         else do 
-                                            putStrLn ("The door is unluck.")
+                                            putStrLn ("The door is unlock.")
+                                            putStrLn (get_unlock_info obj)
                                             putStrLn ("If you want to move to the " ++ (get_connect obj) ++ " room, you can input 'move " ++ (get_connect obj) ++ "'.")
                                             run_code p h
 cmd (Search rm objname)         p h = do

@@ -24,13 +24,15 @@ data Room = Room {
 
 
 data Objects = Objects {
-                       object_id        :: Int,
-                       object_name      :: String,
-                       object_items     :: [Item],
-                       object_connect   :: String,
-                       object_type      :: String,
-                       object_status    :: Bool,
-                       object_key       :: Item
+                       object_id            :: Int,
+                       object_name          :: String,
+                       object_items         :: [Item],
+                       object_connect       :: String,
+                       object_type          :: String,
+                       object_lock_info     :: String,
+                       object_unlock_info   :: String,
+                       object_status        :: Bool,
+                       object_key           :: Item
                        }
                        deriving (Eq, Show, Read)
 

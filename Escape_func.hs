@@ -66,6 +66,12 @@ get_items       (Objects {object_items=items}) = items
 get_info :: Item -> String
 get_info        (Item {item_info=info}) = info
 
+get_lock_info :: Objects -> String
+get_lock_info (Objects {object_lock_info=info}) = info
+
+get_unlock_info :: Objects -> String
+get_unlock_info (Objects {object_unlock_info=info}) = info
+
 -- This function get all item in the player bag.
 get_location :: Player -> Int
 get_location (Player {player_location=id}) = id
@@ -91,20 +97,20 @@ add_item_in_bag :: Player -> [Item] -> Player
 add_item_in_bag p i = Player {player_location=get_location p, player_bag=(get_bag_item p) ++ i}
 
 remove_obj :: [Objects] -> Objects -> [Objects]
-remove_obj (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_status=True, object_key=get_key o}:os)
+remove_obj (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_lock_info=get_lock_info o, object_unlock_info="This Object have been search.", object_status=True, object_key=get_key o}:os)
                         else (o:remove_obj os obj)
 
 remove_item_in_obj :: Int -> House -> Objects -> House
 remove_item_in_obj id (h:hs) o = if get_id h == id then [Room {room_id=get_id h, room_name=get_name h, room_objects=remove_obj (get_objects h) o}] ++ hs
                                  else (h:remove_item_in_obj id hs o)
 
-unluck :: [Objects] -> Objects -> [Objects]
-unluck (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_status=True, object_key=get_key o}:os)
-                    else (o:unluck os obj)
+unlock :: [Objects] -> Objects -> [Objects]
+unlock (o:os) obj = if o == obj then (Objects {object_id=get_id o, object_name=get_name o, object_items=[], object_connect=get_connect o, object_type=get_type o, object_lock_info=get_lock_info o, object_unlock_info=get_unlock_info o, object_status=True, object_key=get_key o}:os)
+                    else (o:unlock os obj)
 
-unluck_door :: Int -> House -> Objects -> House
-unluck_door id (h:hs) o = if get_id h == id then (Room {room_id=get_id h, room_name=get_name h, room_objects=unluck (get_objects h) o}:hs)
-                          else (h:unluck_door id hs o)
+unlock_door :: Int -> House -> Objects -> House
+unlock_door id (h:hs) o = if get_id h == id then (Room {room_id=get_id h, room_name=get_name h, room_objects=unlock (get_objects h) o}:hs)
+                          else (h:unlock_door id hs o)
 
 get_objects_by_type :: String -> [Objects] -> [Objects]
 get_objects_by_type t []     = []
@@ -112,7 +118,7 @@ get_objects_by_type t (o:os) = if get_type o == t then (o:get_objects_by_type t 
                                else get_objects_by_type t os
 
 get_obj_by_connect :: String -> [Objects] -> Objects
-get_obj_by_connect c []     = Objects {object_id=0, object_name="Nothing", object_items=[], object_connect="", object_type="", object_status=False, object_key=Item {item_id=0, item_name="", item_info=""}}
+get_obj_by_connect c []     = Objects {object_id=0, object_name="Nothing", object_items=[], object_connect="", object_type="", object_lock_info="", object_unlock_info="", object_status=False, object_key=Item {item_id=0, item_name="", item_info=""}}
 get_obj_by_connect c (o:os) = if get_connect o == c then o
                               else get_obj_by_connect c os
 
