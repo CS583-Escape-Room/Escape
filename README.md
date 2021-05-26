@@ -27,4 +27,4 @@ Objects are interactive elements in this game. There are two kinds of objects. O
 Items are the smallest elements in this game. They are all in objects or players' bag.  
 Player represent palyers' location and what items in palyers' bag.  
 For these above data types, we choose to use functor. For rooms, objects and items, we always need their ids and names. So we design a functor and get_id & get_name functions to run for all these three data types.  
-We follow classmates' suggestion. We design that all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.
+Following classmates' suggestion, we make several changes. The most important one is that we define all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.
