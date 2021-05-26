@@ -26,4 +26,5 @@ Room is the basic unit of this game. It contains several objects to be interacti
 Objects are interactive elements in this game. There are two kinds of objects. One is common objects. Players can interactive with them to collect items. Another one is doors. Players can interactive with doors to move from roomA to roomB. Objects' imformation will be hidden until they are be unlocked.  
 Items are the smallest elements in this game. They are all in objects or players' bag.  
 Player represent palyers' location and what items in palyers' bag.  
+For these above data types, we choose to use functor. For rooms, objects and items, we always need their ids and names. So we design a functor and get_id & get_name functions to run for all these three data types.  
 We follow classmates' suggestion. We design that all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.
