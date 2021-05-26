@@ -20,7 +20,7 @@ cabal install split
    question2 : how use haskell to read and write a data file. We want to use this to implement save/load funciton.  
                Now we just set the environment in main. Plan is to set all data in another file. Before game beginning, open this file and                 reload. Saving can save the environment to that file.   
    
-Milestones(2):
+Milestones(2):  
 In this project, our group make several record syntaxs for four types of data which will be used. 
 Room is the basic unit of this game. It contains several objects to be interactived in this game. Nowadays there are only one room. We consider design several rooms and then use doors to connect rooms. 
 Objects are interactive elements in this game. There are two kinds of objects. One is common objects. Players can interactive with them to collect items. Another one is doors. Players can interactive with doors to move from roomA to roomB. Objects' imformation will be hidden until they are be unlocked.
