@@ -43,6 +43,7 @@ help = \x a b -> do
     if x == "main" then main else run_code a b
 
 
+
 cmd :: Cmd -> Player -> House -> IO()
 cmd (Help s)                    p h = help s p h
 cmd Exit                        p h = main
@@ -54,17 +55,22 @@ cmd (SearchRoom rm)             p h = do
 cmd (SearchObj objname obj)     p h = do
                                     let items = get_items obj
                                     if not (get_status obj) then do
-                                        if any (== get_key obj) (get_bag_item p) then do
-                                            let np = add_item_in_bag p items
-                                            let nh = remove_item_in_obj (get_location p) h obj
-                                            putStrLn ("You success open the " ++ objname ++ ". ")
-                                            putStrLn (get_unlock_info obj)
-                                            putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
-                                            run_code np nh
-                                        else do
-                                            putStrLn (objname ++ " is lock, you need a key.")
-                                            putStrLn (get_lock_info obj)
-                                            run_code p h
+                                        case get_lock obj of
+                                            (Password pw) -> do 
+                                                putStrLn "This is password."
+                                                run_code p h
+                                            (Key i) -> do
+                                                if any (== i) (get_bag_item p) then do
+                                                    let np = add_item_in_bag p items
+                                                    let nh = remove_item_in_obj (get_location p) h obj
+                                                    putStrLn ("You success open the " ++ objname ++ ". ")
+                                                    putStrLn (get_unlock_info obj)
+                                                    putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
+                                                    run_code np nh
+                                                else do
+                                                    putStrLn (objname ++ " is lock, you need a key.")
+                                                    putStrLn (get_lock_info obj)
+                                                    run_code p h
                                     else do
                                         if null items then do
                                             let nh = remove_item_in_obj (get_location p) h obj
@@ -77,16 +83,21 @@ cmd (SearchObj objname obj)     p h = do
                                             putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
                                             run_code np nh
 cmd (SearchDoor objname obj)    p h =   if not (get_status obj) then do
-                                            if any (==(get_key obj)) (get_bag_item p) then do
-                                                let nh = unlock_door (get_location p) h obj
-                                                putStrLn "Good job, the door is unlock."
-                                                putStrLn (get_unlock_info obj)
-                                                putStrLn ("You can input 'move " ++ get_connect obj ++ "' to move to the " ++ get_connect obj ++ " room.")
-                                                run_code p nh
-                                            else do
-                                                putStrLn "Sorry this door can not open, you need a key."
-                                                putStrLn (get_lock_info obj)
-                                                run_code p h
+                                            case get_lock obj of
+                                                (Password pw) -> do 
+                                                    putStrLn "This is password."
+                                                    run_code p h
+                                                (Key i) -> do
+                                                    if any (==i) (get_bag_item p) then do
+                                                        let nh = unlock_door (get_location p) h obj
+                                                        putStrLn "Good job, the door is unlock."
+                                                        putStrLn (get_unlock_info obj)
+                                                        putStrLn ("You can input 'move " ++ get_connect obj ++ "' to move to the " ++ get_connect obj ++ " room.")
+                                                        run_code p nh
+                                                    else do
+                                                        putStrLn "Sorry this door can not open, you need a key."
+                                                        putStrLn (get_lock_info obj)
+                                                        run_code p h
                                         else do
                                             putStrLn "The door is unlock."
                                             putStrLn (get_unlock_info obj)
@@ -105,21 +116,25 @@ cmd Bag                         p h = do
                                     putStrLn ("Your bag have " ++ show (length i) ++ " items" ++ show_bag_item i 1)
                                     run_code p h
 cmd (Mov rm roomname)           p h = do
-                                    let objs = get_objects rm
-                                    let doors = get_objects_by_type "door" objs
-                                    if any ((==roomname) . get_connect) doors then do
-                                        let door = get_obj_by_connect roomname doors
-                                        if get_status door then do
-                                            let nrm = get_room_by_name roomname h
-                                            let np = Player {player_location=get_id nrm, player_bag=get_bag_item p}
-                                            run_code np h
-                                        else do
-                                            putStrLn ("Sorry, you can not move to " ++ roomname ++ " room.")
-                                            putStrLn ("You need to find the key to open the '" ++ get_name door ++ "' door.")
-                                            run_code p h
-                                    else do
-                                        putStrLn ("No door can let you move to " ++ roomname ++ ".")
+                                    if get_name rm == roomname then do
+                                        putStrLn ("Your are in " ++ roomname ++ " now.")
                                         run_code p h
+                                    else do
+                                        let objs = get_objects rm
+                                        let doors = get_objects_by_type "door" objs
+                                        if any ((==roomname) . get_connect) doors then do
+                                            let door = get_obj_by_connect roomname doors
+                                            if get_status door then do
+                                                let nrm = get_room_by_name roomname h
+                                                let np = Player {player_location=get_id nrm, player_bag=get_bag_item p}
+                                                run_code np h
+                                            else do
+                                                putStrLn ("Sorry, you can not move to " ++ roomname ++ " room.")
+                                                putStrLn ("You need to find the key to open the '" ++ get_name door ++ "' door.")
+                                                run_code p h
+                                        else do
+                                            putStrLn ("No door can let you move to " ++ roomname ++ ".")
+                                            run_code p h
 cmd (Other c)                   p h = do
                                     putStrLn ("wrong input: '" ++ c ++ "' Please try again.")
                                     run_code p h
@@ -133,7 +148,7 @@ run_code player house = do
         else do
             putStrLn ""
             putStrLn ("Now you are in the " ++ (get_name (get_player_room player house)) ++ ".")
-            putStrLn "What do you want to do?"
+            putStrLn "What do you want to do? (Hint: if you forget the command you can input 'help')"
             putStr "> "
             line <- getLine
             let line_list = (splitOn " " line)

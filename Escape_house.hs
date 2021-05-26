@@ -12,18 +12,21 @@ nokey = Item {item_id=0, item_name="", item_info="This is open."}
 rkey1 = Item {item_id=1, item_name="room key", item_info="A key which can open the door."}
 dkey1 = Item {item_id=2, item_name="desk key", item_info="A key which can open the desk."}
 redkey1 = Item {item_id=4, item_name="red key", item_info="This key can do something."}
+letter = Item {item_id=5, item_name="letter", item_info="This for box password: 'CS583'"}
+password = Item {item_id=5, item_name="password", item_info="CS583"}
+password1 = Item {item_id=6, item_name="password", item_info="987"}
 
 --   item
 ball = Item {item_id=3, item_name="ball", item_info="This ball can do nothing."}
 
 -- | Objects
-object1 = Objects {object_id=1, object_name="desk", object_items=[rkey1], object_connect="", object_type="obj", object_lock_info="123", object_unlock_info="112233", object_status=False, object_key=dkey1}
-object2 = Objects {object_id=2, object_name="chair", object_items=[dkey1], object_connect="", object_type="obj", object_lock_info="456", object_unlock_info="445566", object_status=True, object_key=nokey}
-object3 = Objects {object_id=3, object_name="book", object_items=[], object_connect="", object_type="obj", object_lock_info="123", object_unlock_info="112233", object_status=True, object_key=nokey}
-object4 = Objects {object_id=4, object_name="box", object_items=[], object_connect="", object_type="obj", object_lock_info="456", object_unlock_info="445566", object_status=True, object_key=nokey}
+object1 = Objects {object_id=1, object_name="desk", object_items=[rkey1], object_connect="", object_type="obj", object_lock_info="123", object_unlock_info="112233", object_status=False, object_lock=Key dkey1}
+object2 = Objects {object_id=2, object_name="chair", object_items=[dkey1], object_connect="", object_type="obj", object_lock_info="456", object_unlock_info="445566", object_status=True, object_lock=None}
+object3 = Objects {object_id=3, object_name="book", object_items=[], object_connect="", object_type="obj", object_lock_info="123", object_unlock_info="112233", object_status=True, object_lock=None}
+object4 = Objects {object_id=4, object_name="box", object_items=[], object_connect="", object_type="obj", object_lock_info="456", object_unlock_info="445566", object_status=False, object_lock=Password "123456"}
 
 -- Door
-door1 = Objects {object_id=5, object_name="exit door", object_items=[], object_connect="exit", object_type="door", object_lock_info="123", object_unlock_info="112233", object_status=False, object_key=rkey1}
+door1 = Objects {object_id=5, object_name="exit door", object_items=[], object_connect="exit", object_type="door", object_lock_info="123", object_unlock_info="112233", object_status=False, object_lock=Key rkey1}
 -- door1 = Door {door_id=1, door_name="exit", door_connect=0, door_status=False, door_key=rkey1}
 
 -- | Room

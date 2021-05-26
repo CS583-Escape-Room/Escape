@@ -32,7 +32,7 @@ data Objects = Objects {
                        object_lock_info     :: String,
                        object_unlock_info   :: String,
                        object_status        :: Bool,
-                       object_key           :: Item
+                       object_lock          :: Lock
                        }
                        deriving (Eq, Show, Read)
 
@@ -60,4 +60,10 @@ data Cmd
     | Bag
     | Mov Room String
     | Other String
+    deriving(Eq, Show, Read)
+
+data Lock
+    = None
+    | Password String
+    | Key Item
     deriving(Eq, Show, Read)
