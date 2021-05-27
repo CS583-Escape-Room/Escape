@@ -23,10 +23,10 @@ cabal install split
 Milestones(2):  
 -----  
 *In this project, our group make several record syntaxs for four types of data which will be used.  
-1.Room is the basic unit of this game. It contains several objects to be interactived in this game. Nowadays there are only one room. We consider design several rooms and then use doors to connect rooms.  
-2.Objects are interactive elements in this game. There are two kinds of objects. One is common objects. Players can interactive with them to collect items. Another one is doors. Players can interactive with doors to move from roomA to roomB. Objects' imformation will be hidden until they are be unlocked.  
-3.Items are the smallest elements in this game. They are all in objects or players' bag.  
-4.Player represent palyers' location and what items in palyers' bag.  
+1. Room is the basic unit of this game. It contains several objects to be interactived in this game. Nowadays there are only one room. We consider design several rooms and then use doors to connect rooms.  
+2. Objects are interactive elements in this game. There are two kinds of objects. One is common objects. Players can interactive with them to collect items. Another one is doors. Players can interactive with doors to move from roomA to roomB. Objects' imformation will be hidden until they are be unlocked.  
+3. Items are the smallest elements in this game. They are all in objects or players' bag.  
+4. Player represent palyers' location and what items in palyers' bag.  
 *For these above data types, we choose to use functor. For rooms, objects and items, we always need their ids and names. So we design a functor and get_id & get_name functions to run for all these three data types.  
 *Following classmates' suggestion, we make several changes. The most important one is that we define all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.  
 *For the expandability, our plan is to add a data type as lock. Objects can be locked by keys or passwords. Now we meet with one problem about one object corresponds to multiple locks. Unlock conditions can be "and"(e.x. Safe needs one key and one password at the same time) and "or"(e.x. DoorA can be unlocked by either Key1 or Key2). We want to find out if functor can help us achieve it.
