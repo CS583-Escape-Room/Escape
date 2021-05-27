@@ -67,10 +67,8 @@ study = Room {room_id=4, room_name="study", room_objects=[object41, object42, ob
 -- | exit: a special room
 outdoor = Room {room_id=0, room_name="exit", room_objects=[]}
 
-
 -- | House
 house1 = [livingRoom, bedroom, bathroom, study, outdoor]
-
 
 -- | Player
 player1 = Player {player_location=1, player_bag=[]}

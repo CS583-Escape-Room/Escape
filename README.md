@@ -21,7 +21,7 @@ How to play this game:
      * `exit`                                               | you can use this instruction to exit the game."  
 * Example:  
      * type in `search room`                                  | you can see `The objects in room: desk, chair, book, box, exit door`  
-     * type in `search desk`                                  | you can see `desk is lock, you need a key.`  
+     * type in `search desk`                                  | you can see `desk is lock, you need something.`  
      * type in `check bag`                                    | you can see `Your bag have 2 items ......`
      * type in `exit`                                         | you can exit this game
      * type in `search bag(non-existent object)`              | you can see `This room does not have 'bag' object.`  
