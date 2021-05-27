@@ -9,7 +9,7 @@ cabal install split
 <!-- 1. A brief description of your project goals (you can take this from your project proposal), and your current progress toward achieving those goals.
      2. Instructions for how to run your project (e.g. which file to load in GHCi), including several example inputs, if applicable.
      3. In Milestone #1: a list of 2–4 design questions that you have about your project, that you would like to discuss during the workshop.-->
-Milestones(1):  
+Milestones (1):  
 ----- 
 1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.  
    We have build the basic project structure. Based on this structure, we have build the three function:   
@@ -21,7 +21,7 @@ Milestones(1):
    question2 : how use haskell to read and write a data file. We want to use this to implement save/load funciton.  
                Now we just set the environment in main. Plan is to set all data in another file. Before game beginning, open this file and                 reload. Saving can save the environment to that file.   
    
-Milestones(2):  
+Milestones (2):  
 -----  
 * In this project, our group make several record syntaxs for four types of data which will be used.  
 1. Room is the basic unit of this game. It contains several objects to be interactived in this game. Nowadays there are only one room. We consider design several rooms and then use doors to connect rooms.  

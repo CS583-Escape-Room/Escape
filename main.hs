@@ -58,8 +58,8 @@ cmd (SearchObj objname obj)     p h = do
                                         case get_lock obj of
                                             (Password pw) -> do 
                                                 putStrLn "This is password."
-                                                checkPassword pw p h
-                                                run_code p h
+                                                checkPassword pw items obj objname p h
+                                                -- run_code p h
                                             (Key i) -> do
                                                 if any (== i) (get_bag_item p) then do
                                                     let np = add_item_in_bag p items
@@ -87,8 +87,8 @@ cmd (SearchDoor objname obj)    p h =   if not (get_status obj) then do
                                             case get_lock obj of
                                                 (Password pw) -> do 
                                                     putStrLn "This is password."
-                                                    checkPassword pw p h
-                                                    -- run_code p h
+                                                    -- checkPassword pw p h
+                                                    run_code p h
                                                 (Key i) -> do
                                                     if any (==i) (get_bag_item p) then do
                                                         let nh = unlock_door (get_location p) h obj
@@ -141,18 +141,25 @@ cmd (Other c)                   p h = do
                                     putStrLn ("wrong input: '" ++ c ++ "' Please try again.")
                                     run_code p h
 
-checkPassword :: String -> Player -> House -> IO ()
-checkPassword pw p h = do
-                        putStrLn "Please input the password. or input 'exit' to give up."
-                        putStrLn ""
-                        putStr "> "
-                        input <- getLine
-                        if input == pw then do
-                            putStrLn "Good job, input the correct password."
-                        else if input == "exit" then run_code p h
-                        else do
-                            putStrLn "Oh no, you input the wrong password, please try again."
-                            checkPassword pw p h
+checkPassword :: String -> [Item] -> Objects -> String -> Player -> House -> IO ()
+checkPassword pw items obj objname p h = do
+                                putStrLn ""
+                                putStrLn "Please input the password. or input 'exit' to give up."
+                                putStrLn ("You need to inpur " ++ show (length pw) ++ " words.")
+                                putStr "> "
+                                input <- getLine
+                                if input == pw then do
+                                    putStrLn "Good job, you input the correct password."
+                                    let np = add_item_in_bag p items
+                                    let nh = remove_item_in_obj (get_location p) h obj
+                                    putStrLn ("You success open the " ++ objname ++ ". ")
+                                    putStrLn (get_unlock_info obj)
+                                    putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
+                                    run_code np nh
+                                else if input == "exit" then run_code p h
+                                else do
+                                    putStrLn "Oh no, you input the wrong password, please try again."
+                                    checkPassword pw items obj objname p h
 
 checkWin :: String -> Bool
 checkWin roomname = roomname == "exit"
