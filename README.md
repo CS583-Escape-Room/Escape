@@ -52,3 +52,5 @@ Milestones(2):
 * For these above data types, we choose to use functor. For rooms, objects and items, we always need their ids and names. So we design a functor and get_id & get_name functions to run for all these three data types.  
 * Following classmates' suggestion, we make several changes. The most important one is that we define all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.  
 * For the expandability, our plan is to add a data type as lock. Objects can be locked by keys or passwords. Now we meet with one problem about one object corresponds to multiple locks. Unlock conditions can be "and"(e.x. Safe needs one key and one password at the same time) and "or"(e.x. DoorA can be unlocked by either Key1 or Key2). We want to find out if functor or something else can help us achieve it.
+
+### Hint: if you can not pass the game, you can see the `house map.pdf` file to help you.
