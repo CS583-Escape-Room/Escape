@@ -14,11 +14,11 @@ How to play this game:
 3. Type in `start` to begin this game. Now you can see `Now you are in the room 1. What do you want to do?`
 4. During playing this game, you can type in words. If what you type in can be an acceptable command, program will accept it can make an action.  
 * Acceptable command:  
-     * "search 'object's name'                                | you can use this instruction to know what item in the object and get it, or check the door."  
-     * "search room                                           | you can use this instruction to search all object in your current room."  
-     * "check bag                                             | you can use this instruction to check the bag items."  
-     * "move 'room's name'                                    | you can use this instruction to move the player to the room which you input and the room must can accpect."  
-     * "exit                                                  | you can use this instruction to exit the game."  
+     * `search "object's name"`                               | you can use this instruction to know what item in the object and get it, or check the door."  
+     * `search room`                                        | you can use this instruction to search all object in your current room."  
+     * `check bag`                                          | you can use this instruction to check the bag items."  
+     * `move "room's name"`                                   | you can use this instruction to move the player to the room which you input and the room must can accpect."  
+     * `exit`                                               | you can use this instruction to exit the game."  
 * Example:  
      * type in `search room`                                  | you can see `The objects in room: desk, chair, book, box, exit door`  
      * type in `search desk`                                  | you can see `desk is lock, you need a key.`  
