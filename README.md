@@ -13,18 +13,24 @@ How to play this game:
 2. Type in `main` to start this program.
 3. Type in `start` to begin this game. Now you can see `Now you are in the room 1. What do you want to do?`
 4. During playing this game, you can type in words. If what you type in can be an acceptable command, program will accept it can make an action.  
-Acceptable command:  
-* "search 'object's name'                        | you can use this instruction to know what item in the object and get it, or check the door."  
-* "search room                                   | you can use this instruction to search all object in your current room."  
-* "check bag                                     | you can use this instruction to check the bag items."  
-* "move 'room's name'                            | you can use this instruction to move the player to the room which you input and the room must can accpect."  
-* "exit                                          | you can use this instruction to exit the game."
-
+* Acceptable command:  
+     * "search 'object's name'                                | you can use this instruction to know what item in the object and get it, or check the door."  
+     * "search room                                           | you can use this instruction to search all object in your current room."  
+     * "check bag                                             | you can use this instruction to check the bag items."  
+     * "move 'room's name'                                    | you can use this instruction to move the player to the room which you input and the room must can accpect."  
+     * "exit                                                  | you can use this instruction to exit the game."  
+* Example:  
+     * type in `search room`                                  | you can see `The objects in room: desk, chair, book, box, exit door`  
+     * type in `search desk`                                  | you can see `desk is lock, you need a key.`  
+     * type in `check bag`                                    | you can see `Your bag have 2 items ......`
+     * type in `exit`                                         | you can exit this game
+     * type in `search bag(non-existent object)`              | you can see `This room does not have 'bag' object.`  
+     * type in `open door(non-existent command)`              | you can see `wrong input: 'open door' Please try again.`
 
 <!-- 1. A brief description of your project goals (you can take this from your project proposal), and your current progress toward achieving those goals.
      2. Instructions for how to run your project (e.g. which file to load in GHCi), including several example inputs, if applicable.
      3. In Milestone #1: a list of 2–4 design questions that you have about your project, that you would like to discuss during the workshop.-->
-Milestones (1):  
+Milestones(1):  
 ----- 
 1. This is a graphic room escape decryption game. The user's goal is to escape the room through interaction with map objects.  
    We have build the basic project structure. Based on this structure, we have build the three function:   
@@ -36,7 +42,7 @@ Milestones (1):
    question2 : how use haskell to read and write a data file. We want to use this to implement save/load funciton.  
                Now we just set the environment in main. Plan is to set all data in another file. Before game beginning, open this file and                 reload. Saving can save the environment to that file.   
    
-Milestones (2):  
+Milestones(2):  
 -----  
 * In this project, our group make several record syntaxs for four types of data which will be used.  
 1. Room is the basic unit of this game. It contains several objects to be interactived in this game. Nowadays there are only one room. We consider design several rooms and then use doors to connect rooms.  
