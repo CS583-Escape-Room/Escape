@@ -8,14 +8,14 @@ import Escape_type
 nothing = Item {item_id=0, item_name="", item_info=""}
 
 --  item
-redKey = Item {item_id=1, item_name="red key", item_info="A key which can open the door."}
-sliverKey = Item {item_id=2, item_name="sliver key", item_info="A key which can open the desk."}
+redKey = Item {item_id=1, item_name="red key", item_info="A key which can open something."}
+sliverKey = Item {item_id=2, item_name="sliver key", item_info="A key which can open something."}
 paper1 = Item {item_id=3, item_name="a small paper", item_info="There is a string of numbers written on the paper: OSU ADV FUNCTIONAL PROGRAMMING CS..."}
-yellowKey = Item {item_id=4, item_name="yellow key", item_info="A key which can open the door."}
-whiteKey = Item {item_id=5, item_name="white key", item_info="A key which can open the desk."}
+yellowKey = Item {item_id=4, item_name="yellow key", item_info="A key which can open something."}
+whiteKey = Item {item_id=5, item_name="white key", item_info="A key which can open something."}
 paper2 = Item {item_id=6, item_name="another small paper", item_info="There is a string of numbers written on the paper: HelloWorld"}
 ironStick = Item {item_id=7, item_name="iron stick", item_info="This stick looks very hard"}
-ironKey = Item {item_id=0, item_name="iron key", item_info="A key which can open the desk."}
+ironKey = Item {item_id=0, item_name="iron key", item_info="A key which can open something."}
 battery = Item {item_id=9, item_name="battery", item_info="a AA battery"}
 
 
