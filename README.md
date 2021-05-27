@@ -6,6 +6,14 @@
 cabal install fgl  
 cabal install split  
 
+
+How to play this game:  
+------
+1. Download all files then use `ghci` to load `main.hs`.
+2. Type in `main` to start this program.
+3. Type in `start` to begin this game. 
+4. 
+
 <!-- 1. A brief description of your project goals (you can take this from your project proposal), and your current progress toward achieving those goals.
      2. Instructions for how to run your project (e.g. which file to load in GHCi), including several example inputs, if applicable.
      3. In Milestone #1: a list of 2–4 design questions that you have about your project, that you would like to discuss during the workshop.-->
@@ -30,4 +38,4 @@ Milestones (2):
 4. Player represent palyers' location and what items in palyers' bag.  
 * For these above data types, we choose to use functor. For rooms, objects and items, we always need their ids and names. So we design a functor and get_id & get_name functions to run for all these three data types.  
 * Following classmates' suggestion, we make several changes. The most important one is that we define all acceptable actions as data Cmd, such as searching room and interactive with objects. This will help us recognize if the input can be an acceptable action.  
-* For the expandability, our plan is to add a data type as lock. Objects can be locked by keys or passwords. Now we meet with one problem about one object corresponds to multiple locks. Unlock conditions can be "and"(e.x. Safe needs one key and one password at the same time) and "or"(e.x. DoorA can be unlocked by either Key1 or Key2). We want to find out if functor can help us achieve it.
+* For the expandability, our plan is to add a data type as lock. Objects can be locked by keys or passwords. Now we meet with one problem about one object corresponds to multiple locks. Unlock conditions can be "and"(e.x. Safe needs one key and one password at the same time) and "or"(e.x. DoorA can be unlocked by either Key1 or Key2). We want to find out if functor or something else can help us achieve it.
