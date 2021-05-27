@@ -69,7 +69,7 @@ cmd (SearchObj objname obj)     p h = do
                                                     putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
                                                     run_code np nh
                                                 else do
-                                                    putStrLn (objname ++ " is lock, you need a key.")
+                                                    putStrLn (objname ++ " is lock, you need something.")
                                                     putStrLn (get_lock_info obj)
                                                     run_code p h
                                     else do
@@ -97,7 +97,7 @@ cmd (SearchDoor objname obj)    p h =   if not (get_status obj) then do
                                                         putStrLn ("You can input 'move " ++ get_connect obj ++ "' to move to the " ++ get_connect obj ++ " room.")
                                                         run_code p nh
                                                     else do
-                                                        putStrLn "Sorry this door can not open, you need a key."
+                                                        putStrLn "Sorry this door can not open, you need something."
                                                         putStrLn (get_lock_info obj)
                                                         run_code p h
                                         else do
