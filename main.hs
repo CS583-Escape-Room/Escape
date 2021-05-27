@@ -58,6 +58,7 @@ cmd (SearchObj objname obj)     p h = do
                                         case get_lock obj of
                                             (Password pw) -> do 
                                                 putStrLn "This is password."
+                                                checkPassword pw p h
                                                 run_code p h
                                             (Key i) -> do
                                                 if any (== i) (get_bag_item p) then do
@@ -86,7 +87,8 @@ cmd (SearchDoor objname obj)    p h =   if not (get_status obj) then do
                                             case get_lock obj of
                                                 (Password pw) -> do 
                                                     putStrLn "This is password."
-                                                    run_code p h
+                                                    checkPassword pw p h
+                                                    -- run_code p h
                                                 (Key i) -> do
                                                     if any (==i) (get_bag_item p) then do
                                                         let nh = unlock_door (get_location p) h obj
@@ -138,6 +140,19 @@ cmd (Mov rm roomname)           p h = do
 cmd (Other c)                   p h = do
                                     putStrLn ("wrong input: '" ++ c ++ "' Please try again.")
                                     run_code p h
+
+checkPassword :: String -> Player -> House -> IO ()
+checkPassword pw p h = do
+                        putStrLn "Please input the password. or input 'exit' to give up."
+                        putStrLn ""
+                        putStr "> "
+                        input <- getLine
+                        if input == pw then do
+                            putStrLn "Good job, input the correct password."
+                        else if input == "exit" then run_code p h
+                        else do
+                            putStrLn "Oh no, you input the wrong password, please try again."
+                            checkPassword pw p h
 
 checkWin :: String -> Bool
 checkWin roomname = roomname == "exit"
