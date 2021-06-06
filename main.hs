@@ -78,8 +78,8 @@ exit = do
 -- This function check the object lock type.
 -- We totally have two type 'door' and 'obj'.
 -- Each type have two kind of luck now. One is key One is password.
-checkLock :: Lock -> String -> [Item] -> Objects -> String -> Player -> House -> IO ()
-checkLock (Key i)       "door"  items obj objname p h = do
+check_lock :: Lock -> String -> [Item] -> Objects -> String -> Player -> House -> IO ()
+check_lock (Key i)       "door"  items obj objname p h = do
                                                 if any (==i) (get_bag_item p) then do
                                                     let nh = unlock_door (get_location p) h obj
                                                     putStrLn "Good job, the door is unlock."
@@ -90,7 +90,7 @@ checkLock (Key i)       "door"  items obj objname p h = do
                                                     putStrLn "Sorry this door can not open, you need something."
                                                     putStrLn ("Hint: " ++ get_lock_info obj)
                                                     run_code p h
-checkLock (Key i)       "obj"   items obj objname p h = do
+check_lock (Key i)       "obj"   items obj objname p h = do
                                                 if any (== i) (get_bag_item p) then do
                                                     let np = add_item_in_bag p items
                                                     let nh = remove_item_in_obj (get_location p) h obj
@@ -102,10 +102,10 @@ checkLock (Key i)       "obj"   items obj objname p h = do
                                                     putStrLn (objname ++ " is lock, you need something.")
                                                     putStrLn ("Hint: " ++ get_lock_info obj)
                                                     run_code p h
-checkLock (Password pw) "door"  items obj objname p h = do
+check_lock (Password pw) "door"  items obj objname p h = do
                                                 putStrLn ""
                                                 putStrLn "Please input the password. or input 'exit' to give up."
-                                                putStrLn ("You need to input " ++ show (length pw) ++ " words.")
+                                                putStrLn ("You need to input " ++ show (length pw) ++ " letters.")
                                                 putStr "> "
                                                 input <- getLine
                                                 if input == pw then do
@@ -119,11 +119,11 @@ checkLock (Password pw) "door"  items obj objname p h = do
                                                 else do
                                                     putStrLn "Oh no, you input the wrong password, please try again."
                                                     putStrLn "Hint: you need to find something in your bag."
-                                                    checkLock (Password pw) "door" items obj objname p h
-checkLock (Password pw) "obj"   items obj objname p h = do
+                                                    check_lock (Password pw) "door" items obj objname p h
+check_lock (Password pw) "obj"   items obj objname p h = do
                                                 putStrLn ""
                                                 putStrLn "Please input the password. or input 'exit' to give up."
-                                                putStrLn ("You need to input " ++ show (length pw) ++ " words.")
+                                                putStrLn ("You need to input " ++ show (length pw) ++ " letters.")
                                                 putStr "> "
                                                 input <- getLine
                                                 if input == pw then do
@@ -138,7 +138,7 @@ checkLock (Password pw) "obj"   items obj objname p h = do
                                                 else do
                                                     putStrLn "Oh no, you input the wrong password, please try again."
                                                     putStrLn "Hint: you need to find something in your bag."
-                                                    checkLock (Password pw) "obj" items obj objname p h
+                                                    check_lock (Password pw) "obj" items obj objname p h
 
 
 -- | This fucntion is for to do the command that player input.
@@ -149,13 +149,13 @@ cmd (Help s)                    p h = help s p h
 cmd Exit                        p h = main
 cmd (SearchRoom rm)             p h = do
                                     if not (null (get_objects rm)) then
-                                        putStrLn ("The objects in room: " ++ intercalate ", " (map get_name (get_objects rm)))
+                                         putStrLn ("The objects in room: " ++ intercalate ", " (map get_name (get_objects rm)))
                                     else putStrLn "No objects in this room. "
                                     run_code p h
 cmd (SearchObj objname obj)     p h = do
                                     let items = get_items obj
                                     if not (get_status obj) then do
-                                        checkLock (get_lock obj) "obj" items obj objname p h
+                                        check_lock (get_lock obj) "obj" items obj objname p h
                                     else do
                                         if null items then do
                                             let nh = remove_item_in_obj (get_location p) h obj
@@ -168,7 +168,7 @@ cmd (SearchObj objname obj)     p h = do
                                             putStrLn ("You got items : " ++ intercalate ", " (map get_name items))
                                             run_code np nh
 cmd (SearchDoor objname obj)    p h =   if not (get_status obj) then do
-                                            checkLock (get_lock obj) "door" [] obj objname p h
+                                            check_lock (get_lock obj) "door" [] obj objname p h
                                         else do
                                             putStrLn "The door is unlock."
                                             putStrLn (get_unlock_info obj)

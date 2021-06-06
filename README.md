@@ -3,8 +3,7 @@
 <!-- Instell the packages -->
 <!-- It will take many times -->
 ### Before you run the code you need to install those package.
-cabal install fgl  
-cabal install split  
+cabal install --lib mtl fgl split 
 
 
 How to play this game:  

@@ -4,19 +4,16 @@ import Escape_type
 
 
 -- | Item
---   base item
-nothing = Item {item_id=0, item_name="", item_info=""}
-
---  item
-redKey = Item {item_id=1, item_name="red key", item_info="A key which can open something."}
-sliverKey = Item {item_id=2, item_name="sliver key", item_info="A key which can open something."}
-paper1 = Item {item_id=3, item_name="a small paper", item_info="There is a string of numbers written on the paper: OSU ADV FUNCTIONAL PROGRAMMING CS..."}
-yellowKey = Item {item_id=4, item_name="yellow key", item_info="A key which can open something."}
-whiteKey = Item {item_id=5, item_name="white key", item_info="A key which can open something."}
-paper2 = Item {item_id=6, item_name="another small paper", item_info="There is a string of numbers written on the paper: HelloWorld"}
-ironStick = Item {item_id=7, item_name="iron stick", item_info="This stick looks very hard"}
-ironKey = Item {item_id=0, item_name="iron key", item_info="A key which can open something."}
-battery = Item {item_id=9, item_name="battery", item_info="a AA battery"}
+--                 id   name                   info
+ironKey     = Item 0    "iron key"             "A key which can open something."
+redKey      = Item 1    "red key"              "A key which can open something."
+sliverKey   = Item 2    "sliver key"           "A key which can open something."
+paper1      = Item 3    "a small paper"        "There is a string of numbers written on the paper: OSU ADV FUNCTIONAL PROGRAMMING CS*** "
+yellowKey   = Item 4    "yellow key"           "A key which can open something."
+whiteKey    = Item 5    "white key"            "A key which can open something."
+paper2      = Item 6    "another small paper"  "There is a string of numbers written on the paper: HelloWorld"
+ironStick   = Item 7    "iron stick"           "This stick looks very hard"
+battery     = Item 9    "battery"              "a AA battery"
 
 
 -- | Objects in living room
@@ -71,4 +68,4 @@ outdoor = Room {room_id=0, room_name="exit", room_objects=[]}
 house1 = [livingRoom, bedroom, bathroom, study, outdoor]
 
 -- | Player
-player1 = Player {player_location=1, player_bag=[]}
+player1 = Player 1 []
