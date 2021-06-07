@@ -1,6 +1,7 @@
 module Escape_house where
 
 import Escape_type
+import Escape_func (o_door, o_obj)
 
 
 -- | Item
@@ -13,59 +14,65 @@ yellowKey   = Item 4    "yellow key"           "A key which can open something."
 whiteKey    = Item 5    "white key"            "A key which can open something."
 paper2      = Item 6    "another small paper"  "There is a string of numbers written on the paper: HelloWorld"
 ironStick   = Item 7    "iron stick"           "This stick looks very hard"
-battery     = Item 9    "battery"              "a AA battery"
+battery     = Item 9    "battery"              "A AA battery"
 
 
 -- | Objects in living room
-object11 = Objects {object_id=11, object_name="the left drawer of TV cabinet", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing"}
-object12 = Objects {object_id=12, object_name="the right drawer of TV cabinet", object_items=[battery], object_connect="", object_type="obj", object_status=False, object_lock=Key yellowKey, object_lock_info="It's locked. It has a yellow key hole", object_unlock_info="It's opened by your yellow key."}
-object13 = Objects {object_id=13, object_name="TV", object_items=[redKey], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="you find a key behind the TV"}
-object14 = Objects {object_id=14, object_name="sofa", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing"}
-object15 = Objects {object_id=15, object_name="trash can", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
+--               id name                              item        lock_info                                   unlock_info                         status  lock
+object11 = o_obj 11 "the left drawer of TV cabinet"   []          ""                                          "Here is nothing"                   True    None
+object12 = o_obj 12 "the right drawer of TV cabinet"  [battery]   "It's locked. It has a yellow key hole"     "It's opened by your yellow key."   False   (Key yellowKey)
+object13 = o_obj 13 "TV"                              [redKey]    ""                                          "you find a key behind the TV"      True    None
+object14 = o_obj 14 "sofa"                            []          ""                                          "Here is nothing"                   True    None
+object15 = o_obj 15 "trash can"                       []          ""                                          "Here is nothing."                  True    None
 
 -- | Objects in bedroom
-object21 = Objects {object_id=21, object_name="a bed", object_items=[ironStick], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="You find a iron stick under the bed."}
-object22 = Objects {object_id=22, object_name="a wardrobe", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="here is nothing."}
-object23 = Objects {object_id=23, object_name="a bedside table", object_items=[yellowKey], object_connect="", object_type="obj", object_status=False, object_lock=Key redKey, object_lock_info="It has a red keyhole", object_unlock_info="It's opened by your red key."}
-object24 = Objects {object_id=24, object_name="slippers", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
-object25 = Objects {object_id=25, object_name="a box", object_items=[whiteKey], object_connect="", object_type="obj", object_status=False, object_lock=Key battery, object_lock_info="It's locked. It has a battery bay", object_unlock_info="It's opened."}
+--               id name              item        lock_info                           unlock_info                             status  lock
+object21 = o_obj 21 "a bed"           [ironStick] ""                                  "You find a iron stick under the bed."  True    None 
+object22 = o_obj 22 "a wardrobe"      []          ""                                  "Here is nothing."                      True    None
+object23 = o_obj 23 "a bedside table" [yellowKey] "It has a red keyhole"              "It's opened by your red key."          False   (Key redKey)
+object24 = o_obj 24 "slippers"        []          ""                                  "Here is nothing."                      True    None 
+object25 = o_obj 25 "a box"           [whiteKey]  "It's locked. It has a battery bay" "It's opened."                          False   (Key battery) 
 
 -- | Objects in bathroom
-object31 = Objects {object_id=31, object_name="washbasin", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
-object32 = Objects {object_id=32, object_name="a mirror", object_items=[sliverKey], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="You find a sliver key behind of mirror"}
-object33 = Objects {object_id=33, object_name="a toilet", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
-object34 = Objects {object_id=34, object_name="a glass bottle", object_items=[paper1], object_connect="", object_type="obj", object_status=False, object_lock=Key ironStick, object_lock_info="There is a paper in this bottle.", object_unlock_info="You broken the bottom get the paper."}
+--               id name              item        lock_info                           unlock_info                                 status  lock
+object31 = o_obj 31 "washbasin"       []          ""                                  "Here is nothing."                          True    None
+object32 = o_obj 32 "a mirror"        [sliverKey] ""                                  "You find a sliver key behind of mirror"    True    None
+object33 = o_obj 33 "a toilet"        []          ""                                  "Here is nothing."                          True    None
+object34 = o_obj 34 "a glass bottle"  [paper1]    "There is a paper in this bottle."  "You broken the bottom get the paper."      False   (Key ironStick)
 
 
 -- | Objects in study
-object41 = Objects {object_id=41, object_name="a bookcase", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
-object42 = Objects {object_id=42, object_name="a strongbox", object_items=[ironKey], object_connect="", object_type="obj", object_status=False, object_lock=Password "HelloWorld", object_lock_info="This strongbox need a password", object_unlock_info="You use the password open this strongbox"}
-object43 = Objects {object_id=43, object_name="a diary on a writing desk", object_items=[paper2], object_connect="", object_type="obj", object_status=False, object_lock=Password "583", object_lock_info="This diary has a combination lock. It needs 3 numbers.", object_unlock_info="Your password is right. "}
-object44 = Objects {object_id=44, object_name="a chair", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
-object45 = Objects {object_id=45, object_name="a trash can", object_items=[], object_connect="", object_type="obj", object_status=True, object_lock=None, object_lock_info="", object_unlock_info="Here is nothing."}
+--               id name                          item        lock_info                                                   unlock_info                                 status  lock
+object41 = o_obj 41 "a bookcase"                  []          ""                                                          "Here is nothing."                          True    None 
+object42 = o_obj 42 "a strongbox"                 [ironKey]   "This strongbox need a password"                            "You use the password open this strongbox"  False   (Password "HelloWorld")
+object43 = o_obj 43 "a diary on a writing desk"   [paper2]    "This diary has a combination lock. It needs 3 numbers."    "Your password is right. "                  False   (Password "583") 
+object44 = o_obj 44 "a chair"                     []          ""                                                          "Here is nothing."                          True    None 
+object45 = o_obj 45 "a trash can"                 []          ""                                                          "Here is nothing."                          True    None 
 
 
 -- Door
-door12 = Objects {object_id=51, object_name="a blue door", object_items=[], object_connect="bedroom", object_type="door", object_status=True, object_lock=None, object_lock_info="", object_unlock_info=""}
-door14 = Objects {object_id=52, object_name="a wooden door", object_items=[], object_connect="study", object_type="door", object_status=False, object_lock=Key sliverKey, object_lock_info="This door has a sliver keyhole", object_unlock_info=""}
-door21 = Objects {object_id=53, object_name="a blue door", object_items=[], object_connect="living room", object_type="door", object_status=True, object_lock=None, object_lock_info="", object_unlock_info=""}
-door23 = Objects {object_id=54, object_name="a white door", object_items=[], object_connect="bathroom", object_type="door", object_status=False, object_lock=Key whiteKey, object_lock_info="This door has a white keyhole", object_unlock_info=""}
-door32 = Objects {object_id=55, object_name="a white door", object_items=[], object_connect="bedroom", object_type="door", object_status=True, object_lock=None, object_lock_info="", object_unlock_info=""}
-door41 = Objects {object_id=56, object_name="a wooden door", object_items=[], object_connect="living room", object_type="door", object_status=True, object_lock=None , object_lock_info="", object_unlock_info=""}
+--              id name               connect         lock_info                               status  lock
+door12 = o_door 51 "a blue door"      "bedroom"       ""                                      True    None
+door14 = o_door 52 "a wooden door"    "study"         "This door has a sliver keyhole"        False   (Key sliverKey) 
+door21 = o_door 53 "a blue door"      "living room"   ""                                      True    None 
+door23 = o_door 54 "a white door"     "bathroom"      "This door has a white keyhole"         False   (Key whiteKey)
+door32 = o_door 55 "a white door"     "bedroom"       ""                                      True    None
+door41 = o_door 56 "a wooden door"    "living room"   ""                                      True    None 
 
-
-door0 = Objects {object_id=0, object_name="exit", object_items=[], object_connect="exit", object_type="door", object_status=False, object_lock=Key ironKey, object_lock_info="", object_unlock_info="This is a iron door. You have to escape from this door."}
+--              id name     connect lock_info                                                 status  lock
+door00 = o_door 0  "exit"   "exit"  "This is a iron door. You have to escape from this door." False (Key ironKey)
 
 -- | Room
-livingRoom = Room {room_id=1, room_name="living room", room_objects=[object11, object12, object13, object14, object15, door12, door14, door0]}
-bedroom = Room {room_id=2, room_name="bedroom", room_objects=[object21, object22, object23, object24, object25, door21, door23]}
-bathroom = Room {room_id=3, room_name="bathroom", room_objects=[object31, object32, object33, object34, door32]}
-study = Room {room_id=4, room_name="study", room_objects=[object41, object42, object43, object44, object45, door41]}
+--                 id name           objects
+livingRoom  = Room 1  "living room"  [object11, object12, object13, object14, object15, door12, door14, door00]
+bedroom     = Room 2  "bedroom"      [object21, object22, object23, object24, object25, door21, door23]
+bathroom    = Room 3  "bathroom"     [object31, object32, object33, object34, door32]
+study       = Room 4  "study"        [object41, object42, object43, object44, object45, door41]
 -- | exit: a special room
-outdoor = Room {room_id=0, room_name="exit", room_objects=[]}
+escapedoor  = Room 0  "exit"         []
 
 -- | House
-house1 = [livingRoom, bedroom, bathroom, study, outdoor]
+house1 = [livingRoom, bedroom, bathroom, study, escapedoor]
 
 -- | Player
 player1 = Player 1 []

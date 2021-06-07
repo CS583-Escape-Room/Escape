@@ -16,18 +16,18 @@ class Getfunctor t where
 
 -- | instance the Room's id and name.
 instance Getfunctor Room where
-    get_id            (Room {room_id=id}) = id
-    get_name          (Room {room_name=name}) = name
+    get_id            r = room_id r
+    get_name          r = room_name r
 
 -- | instance the Objects's id and name.
 instance Getfunctor Objects where
-    get_id            (Objects {object_id=id}) = id
-    get_name          (Objects {object_name=name}) = name
+    get_id            o = object_id o
+    get_name          o = object_name o
 
 -- | instance the Item's id and name.
 instance Getfunctor Item where
-    get_id            (Item {item_id=id}) = id
-    get_name          (Item {item_name=name}) = name
+    get_id            i = item_id i
+    get_name          i = item_name i
 
 -- get the status.
 get_status :: Objects -> Bool
@@ -79,7 +79,7 @@ get_bag_item p = player_bag p
 -----------------------------------------------------------------------------------------------------------------------------------------
 -- This function show the player room.
 get_player_room :: Player -> House -> Room
-get_player_room _ []     = Room 999 "No search room" []
+get_player_room _ []     = no_room
 get_player_room p (b:bs) = if (get_id b) == (get_location p) then b else get_player_room p bs
 
 -- This function find the object in list of objects by name.
@@ -118,31 +118,42 @@ get_objects_by_type t (o:os) = if get_type o == t then (o:get_objects_by_type t 
 
 -- This function want to find the door that can connect to.
 get_obj_by_connect :: String -> [Objects] -> Objects
-get_obj_by_connect c []     = Objects 0 "Nothing" [] "" "" "" "" False None
+get_obj_by_connect c []     = no_object
 get_obj_by_connect c (o:os) = if get_connect o == c then o
                               else get_obj_by_connect c os
 
 -- This function wants to find the room in house by name.
 get_room_by_name :: String -> House -> Room
-get_room_by_name roomname []     = Room 999 "No search room" []
+get_room_by_name roomname []     = no_room
 get_room_by_name roomname (h:hs) = if get_name h == roomname then h 
                                    else get_room_by_name roomname hs
 
 --
 -- | "check bag" instruction.
---   This is the item style.
+-- This is the item style.
 item_style a n = "\n======================" ++ 
                  "\nItem Number : " ++ show n ++
                  "\nItem Name   : " ++ (get_name a) ++
                  "\nInformation : " ++ (get_info a)
 
---   This function show the item in the player bag.
+-- This function show the item in the player bag.
 show_bag_item :: [Item] -> Int -> String
 show_bag_item []     n = "\nNothing"
 show_bag_item (a:[]) n = item_style a n
 show_bag_item (a:as) n = (item_style a n) ++ (show_bag_item as (n+1))
 
+-- This function short the objects obj type
+o_obj :: Int -> String -> [Item] -> String -> String -> Bool -> Lock -> Objects
+o_obj  a b c f g h i = Objects a b c "" "obj" f g h i
 
-objs  a b c f g h i = Objects a b c "" "obj" f g h i
+-- This function short the objects door type
+o_door :: Int -> String -> String -> String -> Bool -> Lock -> Objects
+o_door a b d f h i   = Objects a b [] d "door" f "" h i
 
-doors a b d f h i   = Objects a b [] d "door" f "" h i
+-- This function replace the room which is not found
+no_room :: Room
+no_room = Room 999 "No search room" []
+
+-- This function replace the objects which is not found
+no_object :: Objects
+no_object = Objects 0 "Nothing" [] "" "" "" "" False None
